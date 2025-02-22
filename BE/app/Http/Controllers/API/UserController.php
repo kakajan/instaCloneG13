@@ -63,4 +63,25 @@ class UserController extends Controller
     {
         //
     }
+    public function sendSMS($phone_number, $code)
+    {
+        ini_set("soap.wsdl_cache_enabled", "0");
+        try {
+            $client = new \SoapClient("http://ippanel.com/class/sms/wsdlservice/server.php?wsdl");
+            $user = "khadij";
+            $pass = "M123455@";
+            $fromNum = "+985000125475";
+            $toNum = array($phone_number);
+            $pattern_code = env("SMS_PATTERN", "u4fyhj92usyrulb");
+            $input_data = array("code" => $code);
+            $sent = $client->sendPatternSms($fromNum, $toNum, $user, $pass, $pattern_code, $input_data);
+            if ($sent) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
 }
