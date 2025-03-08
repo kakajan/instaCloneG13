@@ -72,7 +72,7 @@ class UserController extends Controller
             $pass = "M123455@";
             $fromNum = "+985000125475";
             $toNum = array($phone_number);
-            $pattern_code = env("SMS_PATTERN", "u4fyhj92usyrulb");
+            $pattern_code = env("SMS_PATTERN", "zm1iaar92adcesj");
             $input_data = array("code" => $code);
             $sent = $client->sendPatternSms($fromNum, $toNum, $user, $pass, $pattern_code, $input_data);
             if ($sent) {
