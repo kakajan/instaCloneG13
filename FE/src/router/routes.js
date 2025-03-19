@@ -5,8 +5,10 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
       { path: 'register', component: () => import('pages/RegisterPage.vue') },
-      { path: 'login', component: () => import('pages/LoginPage.vue') },
-      { path: 'posts', component: () => import('pages/PostsPage.vue') }
+      // { path: 'login', component: () => import('pages/LoginPage.vue') },
+      { path: 'posts', component: () => import('pages/PostsPage.vue') },
+      { path: 'login', component: () => import('pages/SendVerify.vue') },
+      { path: 'confirmLogin/:number', component: () => import('pages/ConfirmLogin.vue') }
     ]
   },
 
