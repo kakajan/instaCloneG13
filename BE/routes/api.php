@@ -33,27 +33,29 @@ Route::post('sendVerify', function (Request $request) {
 Route::get(
     'testSMS',
     function () {
-        function sendSMS($phone_number, $code)
-        {
-            ini_set("soap.wsdl_cache_enabled", "0");
-            try {
-                $client = new \SoapClient("http://ippanel.com/class/sms/wsdlservice/server.php?wsdl");
-                $user = "khadij";
-                $pass = "M123455@";
-                $fromNum = "+983000505";
-                $toNum = array($phone_number);
-                $pattern_code = env("SMS_PATTERN", "zm1iaar92adcesj");
-                $input_data = array("code" => $code);
-                $sent = $client->sendPatternSms($fromNum, $toNum, $user, $pass, $pattern_code, $input_data);
-                if ($sent) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } catch (\Throwable $th) {
-                throw $th;
+        $client = new \GuzzleHttp\Client([
+            'verify' => false // Disable SSL certificate verification
+        ]);
+
+        $headers = [
+            'apikey' => 'OWU1ZTVkNmYtZWQ3Ny00YTQwLTg4MTctYTRkNzhjZjhkMjUzMThlOTUxYTU0Y2EwOWZmZDBlMWU4M2Y2YjcwMmMxNzE=',
+            'accept' => '*/*',
+            'Content-Type' => 'application/json',
+        ];
+
+        $body = '{
+            "code": "zdpp7kyvuuh0bvt",
+            "sender": "+983000505",
+            "recipient": "+989119777534",
+            "variable": {
+                "order_id": "45454",
+                "table_id": "1"
             }
-        }
-        sendSMS('09028427527', '4525');
+        }';
+
+        $request = new \GuzzleHttp\Psr7\Request('POST', 'https://api2.ippanel.com/api/v1/sms/pattern/normal/send', $headers, $body);
+        $response = $client->sendAsync($request)->wait();
+
+        echo $response->getBody();
     }
 );
