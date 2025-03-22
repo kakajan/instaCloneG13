@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Post;
 use App\Models\Profile;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -94,5 +95,9 @@ class User extends Authenticatable
         $response = $client->sendAsync($request)->wait();
 
         echo $response->getBody();
+    }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

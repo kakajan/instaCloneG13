@@ -12,7 +12,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->load('profile');
+        return $request->user()->posts;
     }
 
     /**
@@ -20,7 +20,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->user_id = $request->user()->id;
+        $post->save();
+        return response()->json(['status'=>true], 201);
     }
 
     /**
@@ -28,7 +33,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**
